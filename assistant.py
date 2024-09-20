@@ -1,7 +1,7 @@
 from weather import Weather
 from notes import Notepad
 from timer import Timer
-from tkinter import *
+
 
 weather = Weather()
 note = Notepad()
@@ -22,12 +22,12 @@ class Assistant:
             humidity = weather.check_weather(request)
             return 2, humidity
 
-        elif "note" in request or "notes" in request:
+        elif "make" and "note" in request or "notes" in request:
             if "check" in request:
                 content = note.check_notes()
                 return 3, content
 
-            else:
+            elif "delete" not in request:
                 new_note = note.make_note(request)
                 return 4, new_note
 
@@ -35,4 +35,10 @@ class Assistant:
             return 5, ["list of options"]
 
         elif "delete" in request and "note" in request:
-            return 6
+            return 6, [""]
+
+        elif "calendar" in request:
+            return 7, [""]
+
+        else:
+            return None, None

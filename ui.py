@@ -1,6 +1,7 @@
 from tkinter import *
 from assistant import Assistant
 from timer import Timer
+from schedule import calendar_display
 
 MID = "#50B498"
 LIGHT = "#DEF9C4"
@@ -31,12 +32,14 @@ class UI:
         self.footer = Label(text="Type help for suggestions", font=("futura", 8, "normal"), bg=DARK, fg=LIGHT)
         self.footer.grid(column=0, row=20, columnspan=3, pady=20)
 
-    def submit(self):
+
+    def process_request(self):
         self.text = self.entry.get().lower()
         assistant = Assistant(self.window)
         try:
             num, value = assistant.check_request(self.text)
             self.entry.delete(first=0, last=END)
+            return num, value
         except TypeError:
             self.entry.delete(first=0, last=END)
             error = Label(text="Sorry, I don't recognize that request. please try again.", bg=DARK, fg=LIGHT,
@@ -44,6 +47,12 @@ class UI:
             error.grid(column=0, row=19, columnspan=3, pady=5, )
             self.window.after(10000, error.grid_forget)
             num = None
+            value = None
+            return num, value
+
+
+    def submit(self):
+        num, value = self.process_request()
 
         if num == 1:
             # Timer gets initiated
@@ -75,15 +84,31 @@ class UI:
 
         elif num == 5:
             # Help options displayed
-            options = ["Here is a list of phrases to try:", "-What's the weather in (city) (state)?",
-                       "-Make a note: ...", "-Check notes", "-Set a timer for..."]
-            row = 4
-            for each in options:
-                option = Label(text=each, bg=DARK, fg=LIGHT, font=LABEL_FONT)
-                option.grid(column=0, row=row, padx=10, pady=6, columnspan=2, sticky="w")
-                row += 1
-                self.window.after(10000, option.grid_forget)
+            self.display_options()
 
         elif num == 6:
             # Delete notes option
+            print("eventually delete note")
+
+        elif num == 7:
+            # Show calendar
+            calendar = calendar_display()
+            calendar_object = Label(text=calendar, font=LABEL_FONT, bg=DARK, fg=LIGHT, justify="right")
+            calendar_object.grid(column=2, row=2, columnspan=3)
+
+        elif num is None:
             pass
+
+    def display_options(self):
+        options = ["Here is a list of phrases to try:",
+                   "-What's the weather in (city) (state)?",
+                   "-Make a note: ...",
+                   "-Check notes",
+                   "-Set a timer for...",
+                   "-Show calendar"]
+        row = 4
+        for each in options:
+            option = Label(text=each, bg=DARK, fg=LIGHT, font=LABEL_FONT)
+            option.grid(column=0, row=row, padx=10, pady=6, columnspan=2, sticky="w")
+            row += 1
+            self.window.after(10000, option.grid_forget)
