@@ -6,6 +6,8 @@ from timer import Timer
 weather = Weather()
 note = Notepad()
 timer = Timer()
+months = {"january": 1, "february": 2, "march": 3, "april": 4, "may": 5, "june": 6,
+          "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12}
 
 
 class Assistant:
@@ -38,7 +40,32 @@ class Assistant:
             return 6, [""]
 
         elif "calendar" in request:
-            return 7, [""]
+            for month in months:
+                if month in request:
+                    return 7, months[month]
+            return 7, None
+
+        elif "check" in request or "view" in request and "events" in request:
+            return 8, None
+
+        elif "create" in request or "add" in request and "event" in request:
+            export = None
+            split_request = request.split(":")[1]
+            event = split_request.split()
+            for month in months:
+                if month in event:
+                    event_note = (event[0:event.index(month)])
+                    event_note.pop()
+                    joined_note = " ".join(event_note)
+                    note_month = months[month]
+                    note_day = event[event.index(month)+1]
+                    export = (joined_note, note_month, note_day)
+            return 9, export
+
+        elif "delete" in request and "event" in request:
+            request = request.split()
+            event_id = request[2]
+            return 10, event_id
 
         else:
             return None, None
