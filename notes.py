@@ -6,7 +6,7 @@ class Notepad:
         pass
 
     def make_note(self, note):
-        note = note.split(":")
+        note = note.split("to")
         memo = note[1]
         with open(file="notes.txt", mode="a") as file:
             file.writelines(f"{memo}\n")

@@ -1,2 +1,7 @@
 pygame~=2.6.0
 requests~=2.32.3
+mysql~=0.0.3
+mysql-connector-python~=9.0.0
+pandas~=2.2.2
+pandastable~=0.13.1
+future~=1.0.0
