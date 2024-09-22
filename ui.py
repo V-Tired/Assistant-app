@@ -6,6 +6,9 @@ from database import DbMaker
 import pandas as pd
 import pandastable as pt
 
+"""Displays all of the GUI for the program and passes any input into assistant.py for sorting."""
+
+# Colors
 MID = "#50B498"
 LIGHT = "#DEF9C4"
 DARK = "#468585"
@@ -18,6 +21,7 @@ db = DbMaker()
 
 class UI:
     def __init__(self):
+        """Creates all GUI elements on initialization."""
         self.text = ""
         # Window Config
         self.window = Tk()
@@ -39,6 +43,7 @@ class UI:
 
 
     def process_request(self):
+        """Sends request to assistant for sorting, displays error if request not recognized."""
         self.text = self.entry.get().lower()
         assistant = Assistant(self.window)
         try:
@@ -57,6 +62,8 @@ class UI:
 
 
     def submit(self):
+        """On button click, calls request processing, then checks the number to activate the corresponding
+         GUI action."""
         num, value = self.process_request()
 
         if num == 1:
@@ -123,8 +130,9 @@ class UI:
             pass
 
     def display_options(self):
+        """Displays all currently available options for the assistant."""
         options = ["Here is a list of phrases to try:",
-                   "-What's the weather in (city) (state)?",
+                   "-What's the weather in (city) (state)? Note: only in US",
                    "-Make a note to ...",
                    "-Check notes",
                    "-Set a timer for...",
@@ -140,6 +148,7 @@ class UI:
             self.window.after(10000, option.grid_forget)
 
     def display_database(self):
+        """Creates a separate window to display the events database in a table."""
         from_db = []
         columns = ["Id", "Note", "Month", "Day"]
         row = 4

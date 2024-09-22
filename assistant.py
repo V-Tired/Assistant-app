@@ -16,6 +16,8 @@ class Assistant:
         self.window = window
 
     def check_request(self, request):
+        """Check user input for certain keywords, passes the information into the corresponding function, then returns a
+         designated number and any relevant information in the input that can be passed to UI for display"""
         if "timer" in request:
             total_count = timer.check_request(request)
             return 1, total_count

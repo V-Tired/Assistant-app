@@ -2,6 +2,8 @@ import mysql.connector
 from mysql.connector import Error
 import os
 
+"""A module to handle the database that controls events and their dates."""
+
 USER_PWORD = os.environ['USER_PWORD']
 USER_NAME = os.environ['USER_NAME']
 
@@ -70,6 +72,8 @@ class DbMaker:
         self.execute_query(connection, create_event_table)
 
     def add_to_events(self, note, month, day):
+        """Takes user inputted note, month, and day, and adds it as a new entry in the database at the bottom
+         of the list."""
         num = self.read_data(self.connection)[-1][0] + 1
         connection = self.create_db_connection()
         event = f"""INSERT INTO events VALUES
@@ -77,6 +81,7 @@ class DbMaker:
         self.execute_query(connection, query=event)
 
     def read_data(self, connection):
+        """Pulls all the data from events and return them to be displayed."""
         query = """SELECT * FROM events;"""
         cursor = connection.cursor()
         result = None
@@ -88,6 +93,7 @@ class DbMaker:
             print(f"Error: '{err}'")
 
     def delete_entry(self, entry_id):
+        """Takes user inputted id number and deletes the corresponding entry."""
         delete_entry = f"""
         DELETE FROM events 
         WHERE id = {entry_id};

@@ -10,6 +10,8 @@ class Weather:
         pass
 
     def check_weather(self, request):
+        """Pass user inputted city and state into the API for location. The corresponding lat and lon are passed into
+         the weather API to get current temp and humidity, which are returned for display in the GUI."""
         input_list = (request.split(" "))
         if "in" in input_list:
             num = input_list.index("in")
@@ -39,6 +41,7 @@ class Weather:
         return humidity
 
     def get_loc(self, city, state):
+        """Pass user inputted city and state into the geocoding GUI for lat and lon."""
         parameters = {
             'city': city,
             'state': state,
@@ -59,6 +62,4 @@ class Weather:
         else:
             print("Error:", response.status_code, response.text)
 
-
-weather = Weather()
 

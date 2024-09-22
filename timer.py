@@ -1,5 +1,7 @@
 import pygame
 
+"""Creates a timer using user inputted times."""
+
 timer = None
 pygame.mixer.init()
 
@@ -9,6 +11,7 @@ class Timer:
         pass
 
     def check_request(self, request):
+        """Checks through the input to see what variables to include in the timer."""
         input_list = request.split(" ")
         num = input_list.index("for")
         count = int(input_list[num + 1])
@@ -28,6 +31,7 @@ class Timer:
         return count+count2
 
     def count_down(self, count, window, timer_text):
+        """Begins countdown, displays timer, and plays a sound at end of timer."""
         minutes = count // 60
         seconds = count % 60
         if seconds < 10:
