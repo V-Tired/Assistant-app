@@ -5,6 +5,7 @@ from schedule import calendar_display
 from database import DbMaker
 import pandas as pd
 import pandastable as pt
+from email_sender import Email
 
 """Displays all of the GUI for the program and passes any input into assistant.py for sorting."""
 
@@ -17,6 +18,7 @@ BUTTON_FONT = ("futura", 12, "bold")
 LABEL_FONT = ("futura", 11, "normal")
 
 db = DbMaker()
+email = Email()
 
 
 class UI:
@@ -126,6 +128,10 @@ class UI:
             event_id = value
             db.delete_entry(event_id)
 
+        elif num == 11:
+            message = self.email_gui()
+            print(message)
+
         elif num is None:
             pass
 
@@ -139,11 +145,12 @@ class UI:
                    "-Show calendar",
                    "-Show (month) calendar",
                    "-Check events",
-                   "-Create event: (event details) on (month) (day)"]
+                   "-Create event: (event details) on (month) (day)",
+                   "-Send email"]
         row = 4
         for each in options:
-            option = Label(text=each, bg=DARK, fg=LIGHT, font=LABEL_FONT)
-            option.grid(column=0, row=row, padx=10, pady=6, columnspan=2, sticky="w")
+            option = Label(text=each, bg=DARK, fg=LIGHT, font=("futura", 9, "normal"))
+            option.grid(column=0, row=row, padx=10, columnspan=2, sticky="w")
             row += 1
             self.window.after(10000, option.grid_forget)
 
@@ -168,4 +175,52 @@ class UI:
         except FileNotFoundError:
             error = Label(text="Sorry, I could not find any events. Add some and try again.", bg=DARK, fg=LIGHT,
                           font=("futura", 10, "normal"))
+            error.grid(column=0, row=4)
             self.window.after(10000, error.grid_forget)
+
+    def email_gui(self):
+        """Display the necessary entry boxes and buttons for the email GUI"""
+        ask_email = Label(text="To:", bg=DARK, fg=LIGHT, font=("futura", 12, "bold"))
+        ask_email.grid(column=0, row=4)
+        ask_email.focus()
+        receiver = Entry(width=40)
+        receiver.grid(column=1, row=4)
+
+        ask_header = Label(text="Header:", bg=DARK, fg=LIGHT, font=("futura", 12, "bold"))
+        ask_header.grid(column=0, row=5)
+        header = Entry(width=40)
+        header.grid(column=1, row=5)
+
+        ask_message = Label(text="Message", bg=DARK, fg=LIGHT, font=("futura", 16, "bold"))
+        ask_message.grid(column=0, row=8, columnspan=2, pady=10)
+        message = Text(font=("futura", 12, "normal"))
+        message.grid(column=0, row=9, columnspan=2)
+
+        email_button = Button(text="Send Email", bg=DARK, fg=LIGHT, font=("futura", 12, "bold"),
+                              command=lambda: [email.send_email(receiver, message, header),
+                                               ask_email.grid_forget(),
+                                               ask_header.grid_forget(),
+                                               ask_message.grid_forget(),
+                                               header.grid_forget(),
+                                               message.grid_forget(),
+                                               receiver.grid_forget(),
+                                               email_button.grid_forget(),
+                                               cancel_button.grid_forget(),
+                                               self.email_sent()])
+        email_button.grid(column=0, row=10, pady=10)
+        cancel_button = Button(text="Cancel", bg=DARK, fg=LIGHT, font=("futura", 12, "bold"),
+                               command=lambda: [ask_email.grid_forget(),
+                                                ask_header.grid_forget(),
+                                                ask_message.grid_forget(),
+                                                header.grid_forget(),
+                                                message.grid_forget(),
+                                                receiver.grid_forget(),
+                                                email_button.grid_forget(),
+                                                cancel_button.grid_forget()]
+                               )
+        cancel_button.grid(column=1, row=10, pady=10)
+
+    def email_sent(self):
+        msg = Label(text="Email Sent", bg=DARK, fg=LIGHT, font=("futura", 16, "bold"))
+        msg.grid(column=0, row=4, columnspan=2)
+        self.window.after(10000, msg.grid_forget)

@@ -69,5 +69,8 @@ class Assistant:
             event_id = request[2]
             return 10, event_id
 
+        elif "send" in request and "email" in request:
+            return 11, None
+
         else:
             return None, None

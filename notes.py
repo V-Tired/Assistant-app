@@ -22,7 +22,10 @@ class Notepad:
         try:
             with open(file="notes.txt", mode="r") as file:
                 content = file.readlines()
-            return content
+            if not content:
+                return ["No notes currently available"]
+            else:
+                return content
         except FileNotFoundError:
             if not Path("notes.txt").exists():
                 open(file="notes.txt", mode="w")
