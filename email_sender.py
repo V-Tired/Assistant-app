@@ -1,5 +1,6 @@
 import smtplib
 import os
+import re
 
 
 class Email:
@@ -11,7 +12,8 @@ class Email:
         message = message.get("1.0", "end-1c")
         receiver_email = receiver_email.get()
         header = header.get()
-        if "@" in receiver_email and ".com" in receiver_email:
+        pattern = r"\w+@[A-Za-z]+\.(com|edu|net)"
+        if re.search(pattern, receiver_email):
             try:
                 with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
                     connection.starttls()
@@ -19,7 +21,7 @@ class Email:
                     connection.sendmail(from_addr=self.my_email,
                                         to_addrs=receiver_email,
                                         msg=f"Subject:{header}\n\n{message}")
-            except KeyError:
+            except Exception:
                 print("There was an error. Please try again.")
         else:
             pass
