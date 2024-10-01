@@ -33,7 +33,7 @@ class DbMaker:
             print(f"Error: '{err}'")
         return connection
 
-    def create_database(self, connection):
+    def create_database(self, connection) -> None:
         query = "CREATE DATABASE IF NOT EXISTS scheduled_events"
         cursor = connection.cursor()
         try:
@@ -54,7 +54,7 @@ class DbMaker:
             print(f"Error: '{err}'")
         return connection
 
-    def execute_query(self, connection, query: str):
+    def execute_query(self, connection, query: str) -> None:
         cursor = connection.cursor()
         try:
             cursor.execute(query)
@@ -62,7 +62,7 @@ class DbMaker:
         except Error as err:
             print(f"Error:'{err}'")
 
-    def initialize_event_table(self, connection):
+    def initialize_event_table(self, connection) -> None:
         create_event_table = """
              CREATE TABLE IF NOT EXISTS events(
              id INT PRIMARY KEY,
@@ -71,8 +71,8 @@ class DbMaker:
              day INT NOT NULL);"""
         self.execute_query(connection, create_event_table)
 
-    def add_to_events(self, note: str, month: str, day: str):
-        """Takes user inputted note, month, and day, and adds it as a new entry in the database at the bottom
+    def add_to_events(self, note: str, month: str, day: str) -> None:
+        """Take user inputted note, month, and day, and add it as a new entry in the database at the bottom
          of the list."""
         num = self.read_data(self.connection)[-1][0] + 1
         connection = self.create_db_connection()
@@ -81,7 +81,7 @@ class DbMaker:
         self.execute_query(connection, query=event)
 
     def read_data(self, connection) -> list:
-        """Pulls all the data from events and return them to be displayed."""
+        """Pull all the data from events and return them to be displayed."""
         query = """SELECT * FROM events;"""
         cursor = connection.cursor()
         result = None
@@ -92,8 +92,8 @@ class DbMaker:
         except Error as err:
             print(f"Error: '{err}'")
 
-    def delete_entry(self, entry_id: str):
-        """Takes user inputted id number and deletes the corresponding entry."""
+    def delete_entry(self, entry_id: str) -> None:
+        """Take user inputted id number and delete the corresponding entry."""
         delete_entry = f"""
         DELETE FROM events 
         WHERE id = {entry_id};

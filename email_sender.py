@@ -2,13 +2,14 @@ import smtplib
 import os
 import re
 
+"""Connect to smtplib and send email."""
 
 class Email:
     def __init__(self):
         self.my_email = os.environ["MY_EMAIL"]
         self.password = os.environ["MY_PASSWORD"]
 
-    def send_email(self, receiver_email, message, header):
+    def send_email(self, receiver_email, message, header) -> None:
         message = message.get("1.0", "end-1c")
         receiver_email = receiver_email.get()
         header = header.get()

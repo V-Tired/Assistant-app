@@ -1,6 +1,9 @@
 import requests
 import os
 
+"""Access weather and location API to return weather data."""
+
+
 api_key = os.environ['API_KEY']
 HEADERS = {'X-Api-Key': api_key}
 

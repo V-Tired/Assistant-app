@@ -7,7 +7,7 @@ import pandas as pd
 import pandastable as pt
 from email_sender import Email
 
-"""Displays all of the GUI for the program and passes any input into assistant.py for sorting."""
+"""Display all of the GUI for the program and pass any input into assistant.py for sorting."""
 
 # Colors
 MID = "#50B498"
@@ -61,7 +61,7 @@ class UI:
             value = None
             return num, value
 
-    def submit(self):
+    def submit(self) -> None:
         """On button click, calls request processing, then checks the number to activate the corresponding
          GUI action."""
         num, value = self.process_request()
@@ -113,7 +113,7 @@ class UI:
             calendar_object.grid(column=2, row=2, columnspan=3, sticky="w")
 
         elif num == 8:
-            # Display events from database
+            # Display events from Database
             self.display_database()
 
         elif num == 9:
@@ -127,14 +127,15 @@ class UI:
             db.delete_entry(event_id)
 
         elif num == 11:
+            # Send an email
             message = self.email_gui()
             print(message)
 
         elif num is None:
             pass
 
-    def display_options(self):
-        """Displays all currently available options for the assistant."""
+    def display_options(self) -> None:
+        """Display all currently available options for the assistant."""
         options = ["Here is a list of phrases to try:",
                    "-What's the weather in (city) (state)? Note: only in US",
                    "-Make a note to ...",
@@ -152,8 +153,8 @@ class UI:
             row += 1
             self.window.after(10000, option.grid_forget)
 
-    def display_database(self):
-        """Creates a separate window to display the events database in a table."""
+    def display_database(self) -> None:
+        """Create a separate window to display the events database in a table."""
         from_db = []
         columns = ["Id", "Note", "Month", "Day"]
         row = 4
@@ -176,7 +177,7 @@ class UI:
             error.grid(column=0, row=4)
             self.window.after(10000, error.grid_forget)
 
-    def email_gui(self):
+    def email_gui(self) -> None:
         """Display the necessary entry boxes and buttons for the email GUI"""
         ask_email = Label(text="To:", bg=DARK, fg=LIGHT, font=("futura", 12, "bold"))
         ask_email.grid(column=0, row=4)
@@ -218,7 +219,7 @@ class UI:
                                )
         cancel_button.grid(column=1, row=10, pady=10)
 
-    def email_sent(self):
+    def email_sent(self) -> None:
         msg = Label(text="Email Sent", bg=DARK, fg=LIGHT, font=("futura", 16, "bold"))
         msg.grid(column=0, row=4, columnspan=2)
         self.window.after(10000, msg.grid_forget)

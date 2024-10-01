@@ -2,6 +2,7 @@ from weather import Weather
 from notes import Notepad
 from timer import Timer
 
+"""Handles the input data and calls the corresponding function(s), return to UI."""
 
 months = {"january": 1, "february": 2, "march": 3, "april": 4, "may": 5, "june": 6,
           "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12}
@@ -17,7 +18,7 @@ class Assistant:
         self.window = window
 
     def check_request(self, request: str) -> tuple[int | None, int | str | list | None]:
-        """Check user input for certain keywords, passes the information into the corresponding function, then returns a
+        """Check user input for certain keywords, pass the information into the corresponding function, then return a
          designated number and any relevant information in the input that can be passed to UI for display"""
         if "timer" in request:
             total_count = timer.check_request(request)

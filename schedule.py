@@ -1,10 +1,12 @@
 import calendar
 import datetime as dt
 
+"""Use python's calendar module to display a text-line calendar. Optionally take m_input to specify which month,
+otherwise default to current month."""
+
 
 def calendar_display(*args, **kwargs) -> str:
-    """Uses python's calendar module to display a text-line calendar. Optionally takes m_input to specify which month,
-     otherwise defaults to current month."""
+
     m_input = kwargs.get('m_input')
     if m_input:
         month = m_input
