@@ -8,7 +8,7 @@ class Notepad:
     def __init__(self):
         pass
 
-    def make_note(self, note):
+    def make_note(self, note: str) -> str:
         """Creates a note in the notes.txt document."""
         note = note.split("to")
         memo = note[1]
@@ -16,7 +16,7 @@ class Notepad:
             file.writelines(f"{memo}\n")
         return memo
 
-    def check_notes(self):
+    def check_notes(self) -> list:
         """Accesses the notes.txt document(or creates one if there is none) and returns its info to be displayed
          by UI."""
         try:

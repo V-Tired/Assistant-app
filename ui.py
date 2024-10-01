@@ -34,7 +34,7 @@ class UI:
         self.title = Label(text="Personal Assistant", bg=DARK, fg=LIGHT, font=FONT)
         self.title.grid(column=0, row=0, columnspan=2, padx=10, pady=10)
 
-        self.entry = Entry(width=50,)
+        self.entry = Entry(width=50, )
         self.entry.grid(column=0, row=2, padx=10, pady=10, columnspan=2)
 
         self.submit_button = Button(text="Submit", bg=MID, fg=LIGHT, font=BUTTON_FONT, command=self.submit)
@@ -43,8 +43,7 @@ class UI:
         self.footer = Label(text="Type help for suggestions", font=("futura", 8, "normal"), bg=DARK, fg=LIGHT)
         self.footer.grid(column=0, row=20, columnspan=3, pady=20)
 
-
-    def process_request(self):
+    def process_request(self) -> tuple:
         """Sends request to assistant for sorting, displays error if request not recognized."""
         self.text = self.entry.get().lower()
         assistant = Assistant(self.window)
@@ -62,7 +61,6 @@ class UI:
             value = None
             return num, value
 
-
     def submit(self):
         """On button click, calls request processing, then checks the number to activate the corresponding
          GUI action."""
@@ -72,7 +70,7 @@ class UI:
             # Timer gets initiated
             timer = Timer()
             timer_text = Label(text="00:00", fg=DARK, bg=LIGHT, font=BUTTON_FONT)
-            timer_text.grid(column=0, row=1, columnspan=3, pady=10,)
+            timer_text.grid(column=0, row=1, columnspan=3, pady=10, )
             timer.count_down(value, self.window, timer_text)
 
         elif num == 2:

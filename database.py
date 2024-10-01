@@ -54,7 +54,7 @@ class DbMaker:
             print(f"Error: '{err}'")
         return connection
 
-    def execute_query(self, connection, query):
+    def execute_query(self, connection, query: str):
         cursor = connection.cursor()
         try:
             cursor.execute(query)
@@ -71,7 +71,7 @@ class DbMaker:
              day INT NOT NULL);"""
         self.execute_query(connection, create_event_table)
 
-    def add_to_events(self, note, month, day):
+    def add_to_events(self, note: str, month: str, day: str):
         """Takes user inputted note, month, and day, and adds it as a new entry in the database at the bottom
          of the list."""
         num = self.read_data(self.connection)[-1][0] + 1
@@ -80,7 +80,7 @@ class DbMaker:
         ({num}, '{note}', {month}, {day});"""
         self.execute_query(connection, query=event)
 
-    def read_data(self, connection):
+    def read_data(self, connection) -> list:
         """Pulls all the data from events and return them to be displayed."""
         query = """SELECT * FROM events;"""
         cursor = connection.cursor()
@@ -92,7 +92,7 @@ class DbMaker:
         except Error as err:
             print(f"Error: '{err}'")
 
-    def delete_entry(self, entry_id):
+    def delete_entry(self, entry_id: str):
         """Takes user inputted id number and deletes the corresponding entry."""
         delete_entry = f"""
         DELETE FROM events 

@@ -2,7 +2,7 @@ import calendar
 import datetime as dt
 
 
-def calendar_display(*args, **kwargs):
+def calendar_display(*args, **kwargs) -> str:
     """Uses python's calendar module to display a text-line calendar. Optionally takes m_input to specify which month,
      otherwise defaults to current month."""
     m_input = kwargs.get('m_input')

@@ -9,7 +9,7 @@ class Weather:
     def __int__(self):
         pass
 
-    def check_weather(self, request):
+    def check_weather(self, request: str) -> str:
         """Pass user inputted city and state into the API for location. The corresponding lat and lon are passed into
          the weather API to get current temp and humidity, which are returned for display in the GUI."""
         input_list = (request.split(" "))
@@ -40,7 +40,7 @@ class Weather:
         humidity = f"The temp is {temp} with a humidity of {humidity}% in {city}, {state}."
         return humidity
 
-    def get_loc(self, city, state):
+    def get_loc(self, city: str, state: str) -> tuple | None:
         """Pass user inputted city and state into the geocoding GUI for lat and lon."""
         parameters = {
             'city': city,

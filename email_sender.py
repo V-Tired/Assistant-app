@@ -4,7 +4,7 @@ import re
 
 
 class Email:
-    def __init__(self, ):
+    def __init__(self):
         self.my_email = os.environ["MY_EMAIL"]
         self.password = os.environ["MY_PASSWORD"]
 
